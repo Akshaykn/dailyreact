@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import  classes  from './App.module.css';
 import Persons from '../components/Persons/Persons';
+import Cockpit from '../components/cockpit/cockpit';
 
 const StyledButton = styled.button`
   background-color: ${props => props.alt ? 'red' : 'green'};
@@ -18,6 +19,11 @@ const StyledButton = styled.button`
 `;
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+    console.log('[app.js] constructor');
+  } 
   state = {
     persons: [
       { id: 'asfa1', name: 'Max', age: 28 },
@@ -58,6 +64,22 @@ class App extends Component {
     const doesShow = this.state.showPersons;
     this.setState({ showPersons: !doesShow });
   };
+  static getDerivedStateFromProps(state, props) {
+    console.log('[app.js getDerivedStateFromProps ]', props);
+    return state;
+  }
+
+  componentDidMount() {
+    console.log('[app.js conponnet did mount.....]');
+  }
+
+  componentDidUpdate() {
+    console.log('[app.js] component did update.....');
+  }
+  
+  componentDidCatch() {
+    console.log('[app.js] component did catch....');
+  }
 
   render() {
     const style = {
@@ -72,7 +94,7 @@ class App extends Component {
         color: 'black'
       }
     };
-
+    console.log('[app.js render]');
     let persons = null;
 
     if (this.state.showPersons) {
@@ -103,11 +125,11 @@ class App extends Component {
 
     return (
       <div className={classes.App}>
-        <h1>Hi, I'm a React App</h1>
-        <p className={classesArray.join(' ')}>This is really working!</p>
-        <button className={classes.Button} onClick={this.togglePersonsHandler}>
-          Toggle Persons
-        </button>
+        <Cockpit
+          title={this.props.appTitle} 
+          persons={this.state.persons}
+          togglePersonsHandler={this.togglePersonsHandler} 
+          showPersons={this.state.showPersons}  />
         {persons}
       </div>
     );

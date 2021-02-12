@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import classes from './cockpit.css';
 
-const cockpit = (props) => {
+const Cockpit = (props) => {
+
+    useEffect(() => {
+      console.log("[cockpit.js] running");
+    });
+    
     const classesArray = [];
     if (props.persons.length <= 2) {
       classesArray.push(classes.red); // classes = ['red']
@@ -9,13 +14,19 @@ const cockpit = (props) => {
     if (props.persons.length <= 1) {
       classesArray.push(classes.bold); // classes = ['red', 'bold']
     }
+    let btnClass =  '';
+    if(props.showPersons) {
+      btnClass = classes.Red 
+    }
     return (
-      <div className={classes.cockpit}>
-        <h1>Hi, I'm a React App</h1>
+      <div className={classes.Cockpit}>
+        <h1>{props.title}</h1>
         <p className={classesArray.join(' ')}>This is really working!</p>
-        <button className={classes.Button} onClick={this.togglePersonsHandler}>
+        <button className={btnClass} 
+                onClick={props.togglePersonsHandler}>
           Toggle Persons
         </button>
       </div>
     );
 }
+export default Cockpit;
